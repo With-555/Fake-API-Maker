@@ -11,7 +11,7 @@ urlpatterns = (
         path("i18n/", include("django.conf.urls.i18n")),
     ]
     + i18n_patterns(
-        path("admin/", admin.site.urls),
+        path("backend/admin/", admin.site.urls),
     )
     + [
         path("", include("apps.shared.urls")),
