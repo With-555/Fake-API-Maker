@@ -7,7 +7,10 @@ class Gallery(AbstractBaseModel):
     """
     Gallery model to represent a gallery of images.
     """
-    name = models.CharField(max_length=255, unique=True, db_index=True, blank=False, null=False)
+
+    name = models.CharField(
+        max_length=255, unique=True, db_index=True, blank=False, null=False
+    )
     description = models.TextField(blank=True, null=True)
     images = models.ImageField(blank=True, null=True)
 

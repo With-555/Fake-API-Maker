@@ -6,7 +6,9 @@ from apps.shared.models.base import AbstractBaseModel
 
 
 class DynamicSchema(AbstractBaseModel):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True)
+    uuid = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True, db_index=True
+    )
     config = models.JSONField(db_index=True, default=dict)
     count = models.PositiveBigIntegerField(default=0, db_index=True)
     expires_in = models.PositiveIntegerField(default=86400, db_index=True)

@@ -1,440 +1,473 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fake Data Generator</title>
-    <style>
-        :root {
-            --primary: #272727;
-            --primary-hover: #000000;
-            --primary-light: #eef2ff;
-            --danger: #ef4444;
-            --danger-hover: #dc2626;
-            --success: #10b981;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --foreground: #111827;
-            --dark-secondary: #333333;
-            --secondary: #e5e7eb;
-            --radius: 0.5rem;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+{% load static %}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
+{% block body %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Faker Maker</title>
 
-        body {
-            background-color: #f5f7fb;
-            color: var(--gray-800);
-            line-height: 1.5;
-            padding: 2rem 1rem;
-        }
+        <!-- Meta Description -->
+        <meta name="description"
+              content="Generate fake data effortlessly with Faker Maker — your go-to REST API for realistic test data.">
+        <meta name="keywords"
+              content="Faker Maker, fake data generator, REST API, mock data, testing, backend development">
+        <meta name="author" content="Jahongir Hakimjonov">
+        <meta name="robots" content="index, follow">
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        <!-- Favicon -->
+        <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 
-        .card {
-            background-color: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            border-top: 4px solid var(--primary);
-        }
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="Faker Maker - Fake Data Generator API">
+        <meta property="og:description" content="Create and manage fake data with ease using Faker Maker.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://faker.felixits.uz">
+        <meta property="og:image" content="https://faker.felixits.uz/static/images/faker.png">
+        <!-- Update this to the real logo URL if needed -->
 
-        .card-header {
-            padding: 1.5rem;
-            text-align: center;
-            height: 120px;
-        }
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Faker Maker - Fake Data Generator API">
+        <meta name="twitter:description" content="Create realistic mock data for testing with Faker Maker.">
+        <meta name="twitter:image" content="https://faker.felixits.uz/static/images/faker.png">
+        <!-- Same as above -->
 
-        .card-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: 0.5rem;
-        }
+        <!-- Canonical Link -->
+        <link rel="canonical" href="https://faker.felixits.uz">
 
-        .card-description {
-            color: var(--gray-500);
-            font-size: 1rem;
-        }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .card-footer {
-            padding: 1.5rem;
-            background-color: var(--gray-50);
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .fields-container {
-            margin-bottom: 1.5rem;
-        }
-
-        .fields-header {
-            display: grid;
-            grid-template-columns: 5fr 6fr 1fr;
-            gap: 0.5rem;
-            padding: 0 0.25rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--gray-500);
-            font-weight: 500;
-        }
-
-        .fields-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .field-row {
-            display: grid;
-            grid-template-columns: 5fr 6fr 1fr;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .form-grid {
-                grid-template-columns: 1fr 1fr;
+        <style>
+            :root {
+                --primary: #272727;
+                --primary-hover: #000000;
+                --primary-light: #eef2ff;
+                --danger: #ef4444;
+                --danger-hover: #dc2626;
+                --success: #10b981;
+                --gray-50: #f9fafb;
+                --gray-100: #f3f4f6;
+                --gray-200: #e5e7eb;
+                --gray-300: #d1d5db;
+                --gray-400: #9ca3af;
+                --gray-500: #6b7280;
+                --gray-600: #4b5563;
+                --gray-700: #374151;
+                --gray-800: #1f2937;
+                --gray-900: #111827;
+                --foreground: #111827;
+                --dark-secondary: #333333;
+                --secondary: #e5e7eb;
+                --radius: 0.5rem;
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             }
-        }
 
-        .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--gray-700);
-            margin-bottom: 0.5rem;
-        }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
 
-        .form-input,
-        .form-select {
-            width: 100%;
-            padding: 0.625rem 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            color: var(--gray-900);
-            background-color: white;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius);
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
+            body {
+                background-color: #f5f7fb;
+                color: var(--gray-800);
+                line-height: 1.5;
+                padding: 2rem 1rem;
+            }
 
-        .form-input:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+            }
 
-        .form-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-        }
+            .card {
+                background-color: white;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow-lg);
+                overflow: hidden;
+                border-top: 4px solid var(--primary);
+            }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-            font-size: 0.875rem;
-            line-height: 1.5;
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius);
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.15s ease-in-out;
-        }
+            .card-header {
+                padding: 1.5rem;
+                text-align: center;
+                height: 120px;
+            }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
+            .card-title {
+                font-size: 1.75rem;
+                font-weight: 700;
+                color: var(--gray-900);
+                margin-bottom: 0.5rem;
+            }
 
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-        }
+            .card-description {
+                color: var(--gray-500);
+                font-size: 1rem;
+            }
 
-        .btn-primary:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-        }
+            .card-content {
+                padding: 1.5rem;
+            }
 
-        .btn-outline {
-            background-color: transparent;
-            color: var(--gray-700);
-            border-color: var(--gray-300);
-        }
+            .card-footer {
+                padding: 1.5rem;
+                background-color: var(--gray-50);
+                border-top: 1px solid var(--gray-200);
+            }
 
-        .btn-outline:hover {
-            background-color: var(--gray-50);
-            border-color: var(--gray-400);
-        }
-
-        .btn-icon {
-            padding: 0.375rem;
-            border-radius: 0.375rem;
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        .btn-sm {
-            padding: 0.375rem 0.75rem;
-            font-size: 0.75rem;
-        }
-
-        .icon {
-            width: 1rem;
-            height: 1rem;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .icon-sm {
-            width: 0.875rem;
-            height: 0.875rem;
-        }
-
-        .icon-text {
-            margin-left: 0.25rem;
-        }
-
-        .alert {
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1rem;
-        }
-
-        .alert-error {
-            background-color: #fee2e2;
-            color: #b91c1c;
-            border: 1px solid #fecaca;
-        }
-
-        .result-container {
-            background-color: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
-            padding: 1rem;
-        }
-
-        .result-header {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .result-content {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        @media (min-width: 640px) {
-            .result-content {
-                flex-direction: row;
-                align-items: center;
+            .section-header {
+                display: flex;
                 justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
             }
-        }
 
-        .result-url {
-            word-break: break-all;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .result-url:hover {
-            text-decoration: underline;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            line-height: 1;
-            border-radius: 9999px;
-            white-space: nowrap;
-        }
-
-        .badge-outline {
-            background-color: transparent;
-            color: var(--gray-700);
-            border: 1px solid var(--gray-300);
-        }
-
-        .spinner {
-            animation: spin 1s linear infinite;
-            margin-right: 0.5rem;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
+            .section-title {
+                font-size: 1.125rem;
+                font-weight: 600;
+                color: var(--gray-800);
             }
-            to {
-                transform: rotate(360deg);
+
+            .fields-container {
+                margin-bottom: 1.5rem;
             }
-        }
 
-        .hidden {
-            display: none;
-        }
+            .fields-header {
+                display: grid;
+                grid-template-columns: 5fr 6fr 1fr;
+                gap: 0.5rem;
+                padding: 0 0.25rem;
+                margin-bottom: 0.5rem;
+                font-size: 0.875rem;
+                color: var(--gray-500);
+                font-weight: 500;
+            }
+
+            .fields-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .field-row {
+                display: grid;
+                grid-template-columns: 5fr 6fr 1fr;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            @media (min-width: 640px) {
+                .form-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            .form-label {
+                display: block;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: var(--gray-700);
+                margin-bottom: 0.5rem;
+            }
+
+            .form-input,
+            .form-select {
+                width: 100%;
+                padding: 0.625rem 0.75rem;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                color: var(--gray-900);
+                background-color: white;
+                border: 1px solid var(--gray-300);
+                border-radius: var(--radius);
+                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }
+
+            .form-input:focus,
+            .form-select:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+
+            .form-select {
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+                background-position: right 0.5rem center;
+                background-repeat: no-repeat;
+                background-size: 1.5em 1.5em;
+                padding-right: 2.5rem;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                padding: 0.5rem 1rem;
+                border-radius: var(--radius);
+                border: 1px solid transparent;
+                cursor: pointer;
+                transition: all 0.15s ease-in-out;
+            }
+
+            .btn-primary {
+                background-color: var(--primary);
+                color: white;
+                border-color: var(--primary);
+            }
+
+            .btn-primary:hover {
+                background-color: var(--primary-hover);
+                border-color: var(--primary-hover);
+            }
+
+            .btn-primary:disabled {
+                opacity: 0.65;
+                cursor: not-allowed;
+            }
+
+            .btn-outline {
+                background-color: transparent;
+                color: var(--gray-700);
+                border-color: var(--gray-300);
+            }
+
+            .btn-outline:hover {
+                background-color: var(--gray-50);
+                border-color: var(--gray-400);
+            }
+
+            .btn-icon {
+                padding: 0.375rem;
+                border-radius: 0.375rem;
+            }
+
+            .btn-block {
+                display: block;
+                width: 100%;
+            }
+
+            .btn-sm {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .icon {
+                width: 1rem;
+                height: 1rem;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .icon-sm {
+                width: 0.875rem;
+                height: 0.875rem;
+            }
+
+            .icon-text {
+                margin-left: 0.25rem;
+            }
+
+            .alert {
+                padding: 0.75rem 1rem;
+                border-radius: var(--radius);
+                margin-bottom: 1rem;
+            }
+
+            .alert-error {
+                background-color: #fee2e2;
+                color: #b91c1c;
+                border: 1px solid #fecaca;
+            }
+
+            .result-container {
+                background-color: white;
+                border: 1px solid var(--gray-200);
+                border-radius: var(--radius);
+                padding: 1rem;
+            }
+
+            .result-header {
+                font-size: 1.125rem;
+                font-weight: 600;
+                margin-bottom: 0.75rem;
+            }
+
+            .result-content {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            @media (min-width: 640px) {
+                .result-content {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+
+            .result-url {
+                word-break: break-all;
+                color: var(--primary);
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .result-url:hover {
+                text-decoration: underline;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.25rem 0.75rem;
+                font-size: 0.75rem;
+                font-weight: 500;
+                line-height: 1;
+                border-radius: 9999px;
+                white-space: nowrap;
+            }
+
+            .badge-outline {
+                background-color: transparent;
+                color: var(--gray-700);
+                border: 1px solid var(--gray-300);
+            }
+
+            .spinner {
+                animation: spin 1s linear infinite;
+                margin-right: 0.5rem;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .hidden {
+                display: none;
+            }
 
 
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            padding: 20px;
-            background-color: var(--secondary);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
+            footer {
+                margin-top: 40px;
+                text-align: center;
+                padding: 20px;
+                background-color: var(--secondary);
+                border-radius: 12px;
+                transition: all 0.3s ease;
+            }
 
 
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
+            .footer-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
 
-        .social-icons {
-            display: flex;
-            gap: 20px;
-        }
+            .social-icons {
+                display: flex;
+                gap: 20px;
+            }
 
-        .social-icon {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
+            .social-icon {
+                width: 24px;
+                height: 24px;
+                transition: transform 0.3s ease;
+            }
 
-        .social-icon:hover {
-            transform: scale(1.2);
-        }
+            .social-icon:hover {
+                transform: scale(1.2);
+            }
 
-        .footer-description {
-            max-width: 400px;
-            margin: 0 auto;
-            font-size: 14px;
-            color: var(--foreground);
-        }
+            .footer-description {
+                max-width: 400px;
+                margin: 0 auto;
+                font-size: 14px;
+                color: var(--foreground);
+            }
 
-        .social-icon {
-            filter: invert(0);
-            transition: filter 0.3s ease;
-        }
+            .social-icon {
+                filter: invert(0);
+                transition: filter 0.3s ease;
+            }
 
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">Fake Data Generator</h1>
-            <p class="card-description">Define your schema and generate fake data in seconds</p>
-        </div>
-        <div class="card-content">
-            <form id="generator-form">
-                <div class="fields-container">
-                    <div class="section-header">
-                        <h3 class="section-title">Fields</h3>
-                        <button type="button" class="btn btn-outline btn-sm" id="add-field-btn">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="16"></line>
-                                <line x1="8" y1="12" x2="16" y2="12"></line>
-                            </svg>
-                            <span class="icon-text">Add Field</span>
-                        </button>
+        </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">Fake Data Generator</h1>
+                <p class="card-description">Define your schema and generate fake data in seconds</p>
+            </div>
+            <div class="card-content">
+                <form id="generator-form">
+                    <div class="fields-container">
+                        <div class="section-header">
+                            <h3 class="section-title">Fields</h3>
+                            <button type="button" class="btn btn-outline btn-sm" id="add-field-btn">
+                                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                                <span class="icon-text">Add Field</span>
+                            </button>
+                        </div>
+
+                        <div class="fields-header">
+                            <div>Field Name</div>
+                            <div>Type</div>
+                            <div></div>
+                        </div>
+
+                        <div class="fields-list" id="fields-list">
+                            <!-- Fields will be added here -->
+                        </div>
                     </div>
 
-                    <div class="fields-header">
-                        <div>Field Name</div>
-                        <div>Type</div>
-                        <div></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="count" class="form-label">Number of items</label>
+                            <input type="number" id="count" class="form-input" min="1" max="1000" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expires-in" class="form-label">Expires in (seconds)</label>
+                            <input type="number" id="expires-in" class="form-input" min="60" value="3600" required>
+                        </div>
                     </div>
 
-                    <div class="fields-list" id="fields-list">
-                        <!-- Fields will be added here -->
-                    </div>
-                </div>
+                    <div id="error-container" class="alert alert-error hidden"></div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="count" class="form-label">Number of items</label>
-                        <input type="number" id="count" class="form-input" min="1" max="1000" value="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="expires-in" class="form-label">Expires in (seconds)</label>
-                        <input type="number" id="expires-in" class="form-input" min="60" value="3600" required>
-                    </div>
-                </div>
-
-                <div id="error-container" class="alert alert-error hidden"></div>
-
-                <button type="submit" class="btn btn-primary btn-block" id="generate-btn">
-                    <span id="btn-text">Generate Data</span>
-                    <span id="btn-loading" class="hidden">
+                    <button type="submit" class="btn btn-primary btn-block" id="generate-btn">
+                        <span id="btn-text">Generate Data</span>
+                        <span id="btn-loading" class="hidden">
                             <svg class="icon spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -442,139 +475,133 @@
                             </svg>
                             Generating...
                         </span>
-                </button>
-            </form>
-        </div>
-        <div class="card-footer hidden" id="result-section">
-            <h3 class="result-header">Generated Data</h3>
-            <div class="result-container">
-                <div class="result-content">
-                    <a href="#" id="result-url" class="result-url" target="_blank" rel="noopener noreferrer"></a>
-                    <span class="badge badge-outline" id="result-expires"></span>
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer hidden" id="result-section">
+                <h3 class="result-header">Generated Data</h3>
+                <div class="result-container">
+                    <div class="result-content">
+                        <a href="#" id="result-url" class="result-url" target="_blank" rel="noopener noreferrer"></a>
+                        <span class="badge badge-outline" id="result-expires"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<footer>
-    <div class="footer-content">
-        <div class="social-icons">
-            <a href="https://t.me/ja_khan_gir" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
-                <img class="social-icon" src="https://api.badwords.milliytech.uz/static/images/telegram-icon.svg"
-                     alt="Telegram Icon">
-            </a>
-            <a href="https://www.instagram.com/ja_khan_gir/" target="_blank" rel="noopener noreferrer"
-               aria-label="Instagram">
-                <img class="social-icon" src="https://api.badwords.milliytech.uz/static/images/instagram-icon.svg"
-                     alt="Instagram Icon">
-            </a>
-            <a href="https://github.com/JahongirHakimjonov/uzbek-badwords" target="_blank" rel="noopener noreferrer"
-               aria-label="GitHub">
-                <img class="social-icon" src="https://api.badwords.milliytech.uz/static/images/github-icon.svg"
-                     alt="GitHub Icon">
-            </a>
-            <a href="https://api.badwords.milliytech.uz/media/words/bad_words.csv" target="_blank"
-               rel="noopener noreferrer"
-               aria-label="Download">
-                <img class="social-icon" src="https://api.badwords.milliytech.uz/static/images/download.svg"
-                     alt="Download Icon">
-            </a>
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="https://t.me/ja_khan_gir" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                    <img class="social-icon" src="https://faker.felixits.uz/static/images/telegram-icon.svg"
+                         alt="Telegram Icon">
+                </a>
+                <a href="https://www.instagram.com/ja_khan_gir/" target="_blank" rel="noopener noreferrer"
+                   aria-label="Instagram">
+                    <img class="social-icon" src="https://faker.felixits.uz/static/images/instagram-icon.svg"
+                         alt="Instagram Icon">
+                </a>
+                <a href="https://github.com/Felixuz/Fake-API-Maker" target="_blank" rel="noopener noreferrer"
+                   aria-label="GitHub">
+                    <img class="social-icon" src="https://faker.felixits.uz/static/images/github-icon.svg"
+                         alt="GitHub Icon">
+                </a>
+            </div>
+            <p class="footer-description">
+                Generate fake data effortlessly with Faker Maker — your go-to REST API for realistic test data.
+            </p>
         </div>
-        <p class="footer-description">
-            Bu veb-sayt o'zbek tilidagi yomon so'zlar ro'yxatini saqlash va ko'rish uchun yaratilgan. Siz ham yomon
-            so'zlar ro'yxatiga bilgan so'zlaringizni qo'shishingiz mumkin.
-        </p>
-    </div>
-</footer>
+    </footer>
 
-<script>
-    // API endpoints
-    const FIELD_TYPES_API = 'http://127.0.0.1:8000/api/v1/types/'; // Replace with your actual API endpoint
-    const GENERATE_DATA_API = 'http://127.0.0.1:8000/api/v1/generate/'; // Replace with your actual API endpoint
-    const GENERATED_DATA_URL = 'http://127.0.0.1:8000/api/v1/data/'; // Replace with your actual API endpoint
+    <script>
+        // API endpoints
+        BASE_URL = process.env.BASE_URL || 'https://faker.felixits.uz';
+        const FIELD_TYPES_API = BASE_URL + '/api/v1/types/';
+        const GENERATE_DATA_API = BASE_URL + '/api/v1/generate/';
+        const GENERATED_DATA_URL = BASE_URL + '/api/v1/data/';
 
-    // DOM elements
-    const form = document.getElementById('generator-form');
-    const fieldsList = document.getElementById('fields-list');
-    const addFieldBtn = document.getElementById('add-field-btn');
-    const generateBtn = document.getElementById('generate-btn');
-    const btnText = document.getElementById('btn-text');
-    const btnLoading = document.getElementById('btn-loading');
-    const errorContainer = document.getElementById('error-container');
-    const resultSection = document.getElementById('result-section');
-    const resultUrl = document.getElementById('result-url');
-    const resultExpires = document.getElementById('result-expires');
+        // DOM elements
+        const form = document.getElementById('generator-form');
+        const fieldsList = document.getElementById('fields-list');
+        const addFieldBtn = document.getElementById('add-field-btn');
+        const generateBtn = document.getElementById('generate-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnLoading = document.getElementById('btn-loading');
+        const errorContainer = document.getElementById('error-container');
+        const resultSection = document.getElementById('result-section');
+        const resultUrl = document.getElementById('result-url');
+        const resultExpires = document.getElementById('result-expires');
 
-    // Field types array that will be populated from the API
-    let FIELD_TYPES = [];
+        // Field types array that will be populated from the API
+        let FIELD_TYPES = [];
 
-    // Fetch field types from API when page loads
-    document.addEventListener('DOMContentLoaded', fetchFieldTypes);
+        // Fetch field types from API when page loads
+        document.addEventListener('DOMContentLoaded', fetchFieldTypes);
 
-    // Add initial field after field types are loaded
-    function addInitialField() {
-        if (FIELD_TYPES.length > 0) {
-            addField();
-        }
-    }
-
-    // Event listeners
-    addFieldBtn.addEventListener('click', addField);
-    form.addEventListener('submit', handleSubmit);
-
-    // Functions
-    async function fetchFieldTypes() {
-        try {
-            showError(''); // Очистка ошибок
-
-            // Отключение кнопки добавления поля
-            addFieldBtn.disabled = true;
-
-            // Получение типов полей с API
-            const response = await fetch(FIELD_TYPES_API);
-
-            if (!response.ok) {
-                throw new Error(`Failed to fetch field types: ${response.status} ${response.statusText}`);
+        // Add initial field after field types are loaded
+        function addInitialField() {
+            if (FIELD_TYPES.length > 0) {
+                addField();
             }
-
-            const data = await response.json();
-
-            // Обработка данных, возвращенных API
-            FIELD_TYPES = data["data"].map(item => ({id: item["id"], name: item["name"]}));
-
-            // Включение кнопки добавления поля
-            addFieldBtn.disabled = false;
-
-            // Добавление начального поля
-            addInitialField();
-
-        } catch (error) {
-            console.error('Error fetching field types:', error);
-            showError('Failed to load field types. Please refresh the page or try again later.');
-
-            // Использование типов по умолчанию при ошибке API
-            FIELD_TYPES = [
-                {id: 0, name: "None"},
-            ];
-
-            // Добавление начального поля с типами по умолчанию
-            addInitialField();
         }
-    }
 
-    function addField() {
-        const fieldRow = document.createElement('div');
-        fieldRow.className = 'field-row';
+        // Event listeners
+        addFieldBtn.addEventListener('click', addField);
+        form.addEventListener('submit', handleSubmit);
 
-        const fieldId = Date.now().toString();
+        // Functions
+        async function fetchFieldTypes() {
+            try {
+                showError(''); // Очистка ошибок
 
-        fieldRow.innerHTML = `
+                // Отключение кнопки добавления поля
+                addFieldBtn.disabled = true;
+
+                // Получение типов полей с API
+                const response = await fetch(FIELD_TYPES_API);
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch field types: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Обработка данных, возвращенных API
+                FIELD_TYPES = data["data"].map(item => ({type: item["type"], name: item["name"]}));
+
+                // Включение кнопки добавления поля
+                addFieldBtn.disabled = false;
+
+                // Добавление начального поля
+                addInitialField();
+
+            } catch (error) {
+                console.error('Error fetching field types:', error);
+                showError('Failed to load field types. Please refresh the page or try again later.');
+
+                // Использование типов по умолчанию при ошибке API
+                FIELD_TYPES = [
+                    {type: "CharField", name: "None"},
+                ];
+
+                // Добавление начального поля с типами по умолчанию
+                addInitialField();
+            }
+        }
+
+        function addField() {
+            const fieldRow = document.createElement('div');
+            fieldRow.className = 'field-row';
+
+            const fieldId = Date.now().toString();
+
+            fieldRow.innerHTML = `
                 <div>
                     <input type="text" name="field_name" class="form-input" placeholder="Field name" required>
                 </div>
                 <div>
                     <select name="field_type" class="form-select">
-                       ${FIELD_TYPES.map(type => `<option value="${type.id}">${type.name}</option>`).join('')}
+                       ${FIELD_TYPES.map(type => `<option value="${type.type}">${type.name}</option>`).join('')}
                     </select>
                 </div>
                 <div>
@@ -589,111 +616,112 @@
                 </div>
             `;
 
-        fieldsList.appendChild(fieldRow);
+            fieldsList.appendChild(fieldRow);
 
-        // Enable all remove buttons when we have more than one field
-        if (fieldsList.children.length > 1) {
-            const removeButtons = document.querySelectorAll('.remove-field');
-            removeButtons.forEach(btn => btn.removeAttribute('disabled'));
-        }
-
-        // Add event listener to the remove button
-        const removeBtn = fieldRow.querySelector('.remove-field');
-        removeBtn.addEventListener('click', () => {
+            // Enable all remove buttons when we have more than one field
             if (fieldsList.children.length > 1) {
-                fieldRow.remove();
-
-                // Disable the last remove button if only one field remains
-                if (fieldsList.children.length === 1) {
-                    const lastRemoveBtn = document.querySelector('.remove-field');
-                    lastRemoveBtn.setAttribute('disabled', '');
-                }
-            }
-        });
-    }
-
-    function showError(message) {
-        if (message) {
-            errorContainer.textContent = message;
-            errorContainer.classList.remove('hidden');
-        } else {
-            errorContainer.classList.add('hidden');
-        }
-    }
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-
-        // Show loading state
-        generateBtn.disabled = true;
-        btnText.classList.add('hidden');
-        btnLoading.classList.remove('hidden');
-        showError(''); // Clear any existing errors
-
-        try {
-            // Collect field data
-            const fields = [];
-            const fieldNames = document.getElementsByName('field_name');
-            const fieldTypes = document.getElementsByName('field_type');
-
-            for (let i = 0; i < fieldNames.length; i++) {
-                const name = fieldNames[i].value.trim();
-
-                if (!name) {
-                    throw new Error('All field names must be filled');
-                }
-
-                fields.push({
-                    id: fieldTypes[i].value,
-                    name: name
-                });
+                const removeButtons = document.querySelectorAll('.remove-field');
+                removeButtons.forEach(btn => btn.removeAttribute('disabled'));
             }
 
-            const count = document.getElementById('count').value;
-            const expiresIn = document.getElementById('expires-in').value;
+            // Add event listener to the remove button
+            const removeBtn = fieldRow.querySelector('.remove-field');
+            removeBtn.addEventListener('click', () => {
+                if (fieldsList.children.length > 1) {
+                    fieldRow.remove();
 
-            // Prepare data for API
-            const requestData = {
-                config: fields,
-                count: parseInt(count),
-                expires_in: parseInt(expiresIn)
-            };
-
-            // Send data to API
-            const response = await fetch(GENERATE_DATA_API, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
+                    // Disable the last remove button if only one field remains
+                    if (fieldsList.children.length === 1) {
+                        const lastRemoveBtn = document.querySelector('.remove-field');
+                        lastRemoveBtn.setAttribute('disabled', '');
+                    }
+                }
             });
-
-            if (!response.ok) {
-                throw new Error(`API error: ${response.status} ${response.statusText}`);
-            }
-
-            const data = await response.json();
-
-            // Show result
-            resultUrl.href = GENERATED_DATA_URL + `${data["data"]["uuid"]}`;
-            resultUrl.textContent = `${data["data"]["uuid"]}`;
-            resultExpires.textContent = `Expires in ${data["data"]["expires_in"]} seconds`;
-            resultSection.classList.remove('hidden');
-
-            // Scroll to result
-            resultSection.scrollIntoView({behavior: 'smooth'});
-
-        } catch (error) {
-            // Show error
-            showError(error.message || 'An error occurred while generating data');
-            console.error('Error generating data:', error);
-        } finally {
-            // Reset loading state
-            generateBtn.disabled = false;
-            btnText.classList.remove('hidden');
-            btnLoading.classList.add('hidden');
         }
-    }
-</script>
-</body>
-</html>
+
+        function showError(message) {
+            if (message) {
+                errorContainer.textContent = message;
+                errorContainer.classList.remove('hidden');
+            } else {
+                errorContainer.classList.add('hidden');
+            }
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            // Show loading state
+            generateBtn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            showError(''); // Clear any existing errors
+
+            try {
+                // Collect field data
+                const fields = [];
+                const fieldNames = document.getElementsByName('field_name');
+                const fieldTypes = document.getElementsByName('field_type');
+
+                for (let i = 0; i < fieldNames.length; i++) {
+                    const name = fieldNames[i].value.trim();
+
+                    if (!name) {
+                        throw new Error('All field names must be filled');
+                    }
+
+                    fields.push({
+                        type: fieldTypes[i].value,
+                        name: name
+                    });
+                }
+
+                const count = document.getElementById('count').value;
+                const expiresIn = document.getElementById('expires-in').value;
+
+                // Prepare data for API
+                const requestData = {
+                    config: fields,
+                    count: parseInt(count),
+                    expires_in: parseInt(expiresIn)
+                };
+
+                // Send data to API
+                const response = await fetch(GENERATE_DATA_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Show result
+                resultUrl.href = GENERATED_DATA_URL + `${data["data"]["uuid"]}`;
+                resultUrl.textContent = `${data["data"]["uuid"]}`;
+                resultExpires.textContent = `Expires in ${data["data"]["expires_in"]} seconds`;
+                resultSection.classList.remove('hidden');
+
+                // Scroll to result
+                resultSection.scrollIntoView({behavior: 'smooth'});
+
+            } catch (error) {
+                // Show error
+                showError(error.message || 'An error occurred while generating data');
+                console.error('Error generating data:', error);
+            } finally {
+                // Reset loading state
+                generateBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        }
+    </script>
+    </body>
+    </html>
+{% endblock %}

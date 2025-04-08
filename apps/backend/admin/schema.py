@@ -9,6 +9,7 @@ class DynamicSchemaAdmin(ModelAdmin):
     list_display = (
         "id",
         "uuid",
+        "is_active",
         "created_at",
     )
     search_fields = ("uuid",)

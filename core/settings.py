@@ -1,5 +1,4 @@
 import os  # noqa
-from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv, find_dotenv
@@ -34,6 +33,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.shared.middlewares.site.DynamicSiteMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -122,3 +122,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 LOCALE_MIDDLEWARE_EXCLUDED_PATHS = ["/media/", "/static/"]
+
+SITE_ID = 1

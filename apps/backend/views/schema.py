@@ -17,8 +17,11 @@ class DynamicSchemaListView(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({
-            "success": True,
-            "message": "Dynamic schema created successfully",
-            "data": serializer.data
-        }, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+                "success": True,
+                "message": "Dynamic schema created successfully",
+                "data": serializer.data,
+            },
+            status=status.HTTP_201_CREATED,
+        )

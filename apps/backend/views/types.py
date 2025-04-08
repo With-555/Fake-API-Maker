@@ -20,8 +20,11 @@ class TypeListView(APIView):
     def get(self, request):
         types = self.get_queryset()
         serializer = self.serializer_class(types, many=True)
-        return Response({
-            "success": True,
-            "message": "Types retrieved successfully",
-            "data": serializer.data
-        }, status=status.HTTP_200_OK)
+        return Response(
+            {
+                "success": True,
+                "message": "Types retrieved successfully",
+                "data": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
