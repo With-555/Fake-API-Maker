@@ -4,7 +4,7 @@
 
 ---
 
-![banner](https://faker.felixits.uz/static/images/maker.png "banner")
+![banner](https://i.postimg.cc/764MqtCg/Pics-Art-25-04-09-12-14-28-305.png "banner")
 
 ## 🛠 Asosiy imkoniyatlari
 
