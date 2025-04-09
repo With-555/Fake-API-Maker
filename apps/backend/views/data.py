@@ -71,11 +71,11 @@ class DataAPIView(APIView):
                 "message": "Data retrieved successfully",
                 "csv": csv_url,
                 "json": json_url,
-                "schema": xlsx_url,
+                "xlsx": xlsx_url,
                 "uuid": str(schema.uuid),
-                "data": data,
                 "created_at": schema.created_at.isoformat(),
                 "expires_in": schema.expires_in,
+                "data": data,
             },
             status=status.HTTP_200_OK,
         )
