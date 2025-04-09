@@ -19,8 +19,8 @@ urlpatterns = (
         path("ckeditor5/", include("django_ckeditor_5.urls")),
         path("rosetta/", include("rosetta.urls")),
         # Media and static files
-        re_path(r"static/(?P<path>.*)", serve, {"document_root": settings.STATIC_ROOT}),
-        re_path(r"media/(?P<path>.*)", serve, {"document_root": settings.MEDIA_ROOT}),
+        re_path(r"^static/(?P<path>.*)", serve, {"document_root": settings.STATIC_ROOT}),
+        re_path(r"^media/(?P<path>.*)", serve, {"document_root": settings.MEDIA_ROOT}),
     ]
 )
 
